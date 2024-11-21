@@ -12,3 +12,102 @@ th, td {
 table {
     margin: 0 auto;
 }
+
+.tournament-title {
+    font-family: sans-serif;
+    font-size:48px;
+}
+
+.tournament-controls {
+    text-align:left;
+    display:flex;
+    align-items: end;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.tournament-controls select {
+    padding-right:60px;
+}
+
+.tournament-controls h4 {
+    font-family: sans-serif;
+    margin-bottom:5px;
+}
+
+.tournament-results {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.error {
+    margin-left:auto;
+    margin-right:auto;
+    width:300px;
+    padding:15px;
+    margin-top:20px;
+    background-color:rgba(255, 0.2, 0.2, 0.2);
+    border-radius:5px;
+}
+
+.pokemon {
+    background-color: rgba(0,0,0,0.12);
+    border-radius: 5px;
+    padding:15px;
+    margin:20px;
+}
+
+.pokemon .name {
+    font-size:20px;
+    padding-bottom:15px;
+}
+
+.pokemon .type {
+    font-weight: 700;
+}
+
+.pokemon .type.poison {
+    color:plum;
+}
+
+.pokemon .type.water {
+    color:blue;
+}
+
+.pokemon .type.fire {
+    color:firebrick;
+}
+
+.pokemon .type.dark {
+    color:purple;
+}
+
+.pokemon .type.fighting {
+    color:brown;
+}
+
+.pokemon .type.psychic {
+    color:peru;
+}
+
+.pokemon .type.grass {
+    color:green;
+}
+
+.pokemon .type.electric {
+    color:fuchsia
+}
+
+.pokemon .type.bug {
+    color:green;
+}
+
+.pokemon .type.ground {
+    color:brown;
+}
+
+.pokemon .type.ice {
+    color:blue;
+}

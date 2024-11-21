@@ -1,12 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams  } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
+import { Pokemon } from "./data/pokemon"
 
 @Component({
   selector: 'app-root',
@@ -14,23 +8,55 @@ interface WeatherForecast {
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  public forecasts: WeatherForecast[] = [];
+  public pokemon: Pokemon[] = [];
+
+  errorMessage: any = "";
+  generating = false;
+  orderByOptions = ["name", "wins", "losses", "ties", "id"];
+  sortDirectionOptions = ["desc", "asc"];
+
+  orderBy = this.orderByOptions[0];
+  sortDirection = this.sortDirectionOptions[0];
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.getForecasts();
+
   }
 
-  getForecasts() {
-    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
+  getPokemon(orderBy : string, sortDirection : string) {
+    let requestUrl = '/pokemon/tournament/statistics?orderBy=' + orderBy + "&sortDirection=" + sortDirection;
+    this.generating = true;
+    this.http.get<Pokemon[]>(requestUrl).subscribe(
       (result) => {
-        this.forecasts = result;
+        this.errorMessage = "";
+        this.pokemon = result;
+        console.log(result);
+        this.generating = false;
       },
       (error) => {
+        this.errorMessage = error.error;
         console.error(error);
+        console.error(error.error);
+        this.generating = false;
       }
     );
+  }
+
+  onOrderByChanged(event : any) {
+    this.orderBy = event.target.value;
+  }
+
+  onSortDirectionChanged(event : any) {
+    this.sortDirection = event.target.value;
+  }
+
+  generateNewStatistics() {
+    this.getPokemon(this.orderBy, this.sortDirection);
+  }
+
+  testError() {
+    this.getPokemon(this.orderBy, "nogood");
   }
 
   title = 'pokemon.client';

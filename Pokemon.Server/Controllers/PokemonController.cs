@@ -4,33 +4,43 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Pokemon.Server.Models;
 using System;
+using System.Text;
 
 namespace Pokemon.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    [Route("pokemon")]
+    public class PokemonController : ControllerBase
     {
         Random random = new Random();
 
-        private static readonly string[] Summaries = new[]
+        [HttpGet("tournament/statistics")]
+        public IEnumerable<Pokemon.Server.Models.Pokemon> Get(string? orderBy, string? sortDirection)
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+            if (orderBy == null || orderBy == "")
+            {
+                Response.StatusCode = 400;
+                var bytes = Encoding.UTF8.GetBytes("sortBy parameter is required");
+                HttpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);            
+                return null;
+            }
 
-        private readonly ILogger<WeatherForecastController> _logger;
+            if (orderBy != "name" && orderBy != "id" && orderBy != "losses" && orderBy != "wins" && orderBy != "ties")
+            {
+                Response.StatusCode = 400;
+                var bytes = Encoding.UTF8.GetBytes("sortBy parameter is invalid");
+                HttpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);         
+                return null;
+            }
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
-
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<Pokemon.Server.Models.Pokemon> Get()
-        {
-            string orderBy = "losses";
-            string sortDirection = "asc";
-
+            if (sortDirection != "asc" && sortDirection != "desc")
+            {
+                Response.StatusCode = 400;
+                var bytes = Encoding.UTF8.GetBytes("sortDirection parameter is invalid");
+                HttpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);            
+                return null;
+            }
+           
             List<int> availableIds = new List<int>();
             
             for (int i = 1; i <= 151; i++)

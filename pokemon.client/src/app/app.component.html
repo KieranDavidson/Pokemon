@@ -1,24 +1,50 @@
-﻿<h1 id="tableLabel">Weather forecast</h1>
+﻿<h1 class="tournament-title">Pokemon Tournament</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<div class="tournament-controls">
+    <div>
+        <h4>Order By</h4>
+        <select name="orderByDropdown" (change)="onOrderByChanged($event)">
+            @for(orderByOption of orderByOptions; track orderByOption) {
+                <option [value]="orderByOption">{{orderByOption | titlecase}}</option>
+            } 
+        </select>
+    </div>
 
-<p *ngIf="!forecasts"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
+    <div>
+        <h4>Sort Direction</h4>
+        <select name="sortDirectionDropdown" (change)="onSortDirectionChanged($event)">
+            @for(directionOption of sortDirectionOptions; track directionOption) {
+                <option [value]="directionOption">{{directionOption | titlecase}}</option>
+            } 
+        </select>
+    </div>
 
-<table *ngIf="forecasts">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let forecast of forecasts">
-            <td>{{ forecast.date }}</td>
-            <td>{{ forecast.temperatureC }}</td>
-            <td>{{ forecast.temperatureF }}</td>
-            <td>{{ forecast.summary }}</td>
-        </tr>
-    </tbody>
-</table>
+    <button (click)="generateNewStatistics()">Generate</button>
+    <button (click)="testError()">Test Error</button>
+</div>
+  
+@if(generating) {
+    <p>Generating...</p>
+    
+}
+@else if(errorMessage != "") {
+    <div class="error">
+        <h3>Error!</h3>
+        <p>{{errorMessage}}</p>
+    </div>
+}
+@else
+{
+    <div class="tournament-results">
+        @for(mon of pokemon; track mon.name) {
+            <div class="pokemon">
+                <div class="name">{{mon.name | titlecase }}</div> 
+                <div>ID: {{mon.id}}</div>           
+                <div>Wins: {{mon.wins}}</div>
+                <div>Losses: {{mon.losses}}</div>
+                <div>Ties: {{mon.ties}}</div>
+                <div>Type: <span class="type" [class]="mon.types[0].type.name">{{mon.types[0].type.name | titlecase}}</span></div>
+            </div>
+        } 
+    </div>
+}

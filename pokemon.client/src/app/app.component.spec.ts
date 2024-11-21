@@ -1,6 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { Pokemon } from './data/pokemon'
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -28,18 +29,35 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should retrieve weather forecasts from the server', () => {
-    const mockForecasts = [
-      { date: '2021-10-01', temperatureC: 20, temperatureF: 68, summary: 'Mild' },
-      { date: '2021-10-02', temperatureC: 25, temperatureF: 77, summary: 'Warm' }
+  it('should retrieve pokemon from the server', () => {
+    const mockPokemon : Pokemon[] = [
+      { name: 'test mon', wins: 3, losses:4, ties: 0, id:0, types:[{type:{name:"normal"}}]},
+      { name: 'test mon', wins: 3, losses:4, ties: 0, id:0, types:[{type:{name:"normal"}}]}
     ];
 
     component.ngOnInit();
+    component.getPokemon("name", "asc");
 
-    const req = httpMock.expectOne('/weatherforecast');
+    const req = httpMock.expectOne('/pokemon/tournament/statistics?orderby=name&sortDirection=asc');
     expect(req.request.method).toEqual('GET');
-    req.flush(mockForecasts);
+    req.flush(mockPokemon);
 
-    expect(component.forecasts).toEqual(mockForecasts);
+    expect(component.pokemon).toEqual(mockPokemon);
+  });
+
+  it('should handle errors', () => {
+    const mockPokemon : Pokemon[] = [
+      { name: 'test mon', wins: 3, losses:4, ties: 0, id:0, types:[{type:{name:"normal"}}]},
+      { name: 'test mon', wins: 3, losses:4, ties: 0, id:0, types:[{type:{name:"normal"}}]}
+    ];
+
+    component.ngOnInit();
+    component.getPokemon("name", "nogood");
+
+    const req = httpMock.expectOne('/pokemon/tournament/statistics?orderby=name&sortDirection=asc');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockPokemon);
+
+    expect(component.errorMessage).toBeTruthy();
   });
 });
