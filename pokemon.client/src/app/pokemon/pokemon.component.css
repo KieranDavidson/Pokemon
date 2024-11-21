@@ -1,0 +1,59 @@
+.pokemon {
+    background-color: rgba(0,0,0,0.12);
+    border-radius: 5px;
+    padding:15px;
+    margin:20px;
+}
+
+.pokemon .name {
+    font-size:24px;
+    padding-bottom:15px;
+}
+
+.pokemon .type {
+    font-weight: 700;
+}
+
+.pokemon .type.poison {
+    color:plum;
+}
+
+.pokemon .type.water {
+    color:blue;
+}
+
+.pokemon .type.fire {
+    color:firebrick;
+}
+
+.pokemon .type.dark {
+    color:purple;
+}
+
+.pokemon .type.fighting {
+    color:brown;
+}
+
+.pokemon .type.psychic {
+    color:peru;
+}
+
+.pokemon .type.grass {
+    color:green;
+}
+
+.pokemon .type.electric {
+    color:fuchsia
+}
+
+.pokemon .type.bug {
+    color:green;
+}
+
+.pokemon .type.ground {
+    color:brown;
+}
+
+.pokemon .type.ice {
+    color:blue;
+}

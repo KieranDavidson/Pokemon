@@ -37,14 +37,7 @@
 {
     <div class="tournament-results">
         @for(mon of pokemon; track mon.name) {
-            <div class="pokemon">
-                <div class="name">{{mon.name | titlecase }}</div> 
-                <div>ID: {{mon.id}}</div>           
-                <div>Wins: {{mon.wins}}</div>
-                <div>Losses: {{mon.losses}}</div>
-                <div>Ties: {{mon.ties}}</div>
-                <div>Type: <span class="type" [class]="mon.types[0].type.name">{{mon.types[0].type.name | titlecase}}</span></div>
-            </div>
+            <pokemon [name]="mon.name" [id]="mon.id" [wins]="mon.wins" [losses]="mon.losses" [ties]="mon.ties" [type]="mon.types[0].type.name" />
         } 
     </div>
 }
