@@ -55,8 +55,16 @@ export class AppComponent implements OnInit {
     this.getPokemon(this.orderBy, this.sortDirection);
   }
 
-  testError() {
+  testErrorOne() {
     this.getPokemon(this.orderBy, "nogood");
+  }
+
+  testErrorTwo() {
+    this.getPokemon("", "asc");
+  }
+
+  testErrorThree() {
+    this.getPokemon("beepboop", "asc");
   }
 
   title = 'pokemon.client';
